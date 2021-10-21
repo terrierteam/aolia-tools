@@ -52,6 +52,8 @@ You can use the the `generate_cars.py` script to generate input files that are u
 [wasiahmad/context_attentive_ir](https://github.com/wasiahmad/context_attentive_ir), allowing you to
 run baselines like CARS, M-NSRF, and M-MatchTensor.
 
+TODO: running Terrier BM25. (Or can we provide these runs for download?)
+
 The script has one required argument: `--out_dir`, which specifies the directory to which to save the
 dataset files.
 
