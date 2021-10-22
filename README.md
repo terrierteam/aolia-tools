@@ -52,13 +52,25 @@ You can use the the `generate_cars.py` script to generate input files that are u
 [wasiahmad/context_attentive_ir](https://github.com/wasiahmad/context_attentive_ir), allowing you to
 run baselines like CARS, M-NSRF, and M-MatchTensor.
 
-TODO: running Terrier BM25. (Or can we provide these runs for download?)
-
-The script has one required argument: `--out_dir`, which specifies the directory to which to save the
-dataset files.
+The script has two required argument: `--out_dir`, which specifies the directory to which to save the
+dataset files, and `--run`, which specifies the gzip'd TREC-formatted run file for all AOL queries.
+This file can be downloaded [here](https://drive.google.com/file/d/1dYval2CG8V98RoL6D2gwJ2vqPM44yf-i/view?usp=sharing)
+(1.3GB, MD5: `d464f3703384ddfca5c08ae4892c4400`).
 
 Right now, this script only works if you are using `ir-datasets`.
 
 ```bash
-python generate_cars.py --out_dir path/to/context_attentive_ir/data/aolia
+python generate_cars.py --out_dir path/to/context_attentive_ir/data/aolia --run path/to/aolia-title-bm25.run.partial.gz
+```
+
+## Replacing CAR-formmated Dataset Titles
+
+To reproduce the `Corpus=AOL17, Docs=AOLIA` setting, we provide the `replace_cars_titles.py` script. This
+takes as input a CARS-formatted dataset file and outputs a new file that replaces the document texts
+with those from `AOLIA`.
+
+Right now, this script only works if you are using `ir-datasets`.
+
+```bash
+python replace_cars_titles.py path/to/output/split.json path/to/output/split.json
 ```

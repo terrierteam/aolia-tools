@@ -62,7 +62,7 @@ def main():
     parser.add_argument('--out_dir', type=Path, required=True)
     parser.add_argument('--dataset', default='aol-ia')
     parser.add_argument('--splits', nargs='+', default='train:2006-04-08:2006-05-17:5 dev:2006-05-17:2006-05-24:5 test:2006-05-24:2007-01-01:50'.split())
-    parser.add_argument('--runs')
+    parser.add_argument('--run', required=True)
     parser.add_argument('--trial', action='store_true')
     parser.add_argument('--title_only', action='store_true')
     args = parser.parse_args()
@@ -110,13 +110,11 @@ def main():
 
     ds = dataset.docs_store()
 
-    if args.runs:
-        runs_by_did = defaultdict(dict)
-        for f in Path(args.runs).glob('*.run.lz4'):
-            with _logger.duration(f'reading run {str(f)}'), LZ4FrameFile(f, 'rb') as fin:
-                for line in fin:
-                    qid, _, did, rank, _, _ = line.decode().strip().split()
-                    runs_by_did[str(qid)][str(did)] = int(rank)
+    runs_by_did = defaultdict(dict)
+    with _logger.duration(f'reading run {args.run}'), gzip.open(args.run, 'rb') as fin:
+        for line in fin:
+            qid, _, did, rank, _, _ = line.decode().strip().split()
+            runs_by_did[str(qid)][str(did)] = int(rank)
 
     with contextlib.ExitStack() as stack:
         split2file = {split: stack.enter_context(open(args.out_dir/f'{split}.json', 'wt')) for split in splits}
