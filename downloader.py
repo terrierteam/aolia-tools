@@ -1,5 +1,5 @@
 import requests
-import ntlk
+import nltk
 from nltk import word_tokenize
 import contextlib
 import fcntl
