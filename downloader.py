@@ -1,4 +1,5 @@
 import requests
+import nltk
 from nltk import word_tokenize
 import contextlib
 import fcntl
@@ -19,7 +20,7 @@ import chardet
 import codecs
 from lxml.html import etree
 from lz4 import frame
-
+nltk.download('punkt')
 
 def sax_html_parser(body):
     sax = SaxExtractor()
