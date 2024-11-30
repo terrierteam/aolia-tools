@@ -1,5 +1,6 @@
 import functools
 import json
+import gzip
 from datetime import datetime
 from collections import defaultdict, Counter
 import pandas as pd
@@ -132,7 +133,7 @@ def main():
             for log in logs:
                 # matching_query = [q for q in record['query'] if q['text'] == log.query]
                 clicked_dids = {i.doc_id for i in log.items if i.clicked}
-                if args.runs:
+                if args.run:
                     dids = get_dids_from_run(runs_by_did[log.query_id], clicked_dids, context)
                 else:
                     dids = [i.doc_id for i in log.items]
